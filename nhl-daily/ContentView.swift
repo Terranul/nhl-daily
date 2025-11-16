@@ -17,6 +17,7 @@ struct ContentView: View {
         }.task {
             do {
                 try api.populateSchedule(url: "https://api-web.nhle.com/v1/score/2025-11-14")
+                try api.populateStandings(url: "https://api-web.nhle.com/v1/standings/2023-11-10")
             } catch {
                 print("issue")
             }

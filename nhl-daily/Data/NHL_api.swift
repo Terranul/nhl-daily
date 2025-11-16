@@ -13,6 +13,7 @@ class NHL_api: ObservableObject{
     
     @Published var boxScore : [BoxScore] = []
     @Published var schedule: Schedule? = nil
+    @Published var standings: Standing? = nil
     
     // handle all calls to the api, returning only json values
     func populateSchedule(url: String) throws {
@@ -57,6 +58,28 @@ class NHL_api: ObservableObject{
                 do {
                     // here we give the data back to the iterator
                     completion(try JSONDecoder().decode(BoxScore.self, from: data))
+                } catch {
+                     print("issue creating schedule")
+                }
+            }
+        }.resume()
+    }
+    
+    func populateStandings(url: String) throws{
+        
+        guard let url = URL(string: url) else {
+            throw NSError()
+        }
+        URLSession.shared.dataTask(with: url) {data ,_,_ in
+            guard let data = data else {
+                return
+            }
+            // continue if no issues
+            DispatchQueue.main.async {
+                do {
+                    // here we give the data back to the iterator
+                    self.standings = try JSONDecoder().decode(Standing.self, from: data)
+                    print(self.standings!.standings.first!.teamAbbrev)
                 } catch {
                      print("issue creating schedule")
                 }
