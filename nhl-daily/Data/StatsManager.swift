@@ -9,6 +9,23 @@
 
 class StatsManager {
     
+    func findDailyLeaders(games: [BoxScore], max: Int) -> [PlayerStats] {
+        var returnStats: [PlayerStats] = []
+        for game in games{
+            let gameSorted = findPlayerLeaders(teams: game.playerByGameStats)
+            if (returnStats.isEmpty) {
+                returnStats = gameSorted
+            } else {
+                returnStats = mergeSortedArrays(list1: gameSorted, list2: returnStats)
+            }
+        }
+        var topMax = max
+        if (returnStats.count < max) {
+            topMax = returnStats.count
+        }
+        return Array(returnStats[0..<topMax])
+    }
+    
     func findPlayerLeaders(teams: BoxScoreTeams) -> [PlayerStats] {
         // we need to merge these players together, becuase the api structures between away,home->forwards,defense,goalies
         let awaySorted = findTeamLeader(team: teams.awayTeam)
@@ -36,7 +53,7 @@ class StatsManager {
         var i: Int = 0
         var j: Int = 0
         while (i < list1.count && j < list2.count) {
-            if (list1[i].points < list2[j].points) {
+            if (list1[i].points > list2[j].points) {
                 merged.append(list1[i])
                 i += 1
             } else {
@@ -64,7 +81,7 @@ class StatsManager {
         var i: Int = 0
         var j: Int = 0
         while (i < list1.count && j < list2.count) {
-            if (calculateSvPtg(g: list1[i]) < calculateSvPtg(g: list2[j])) {
+            if (calculateSvPtg(g: list1[i]) > calculateSvPtg(g: list2[j])) {
                 merged.append(list1[i])
                 i += 1
             } else {
@@ -85,6 +102,23 @@ class StatsManager {
         return merged
     }
     
+    func findGoalieLeaders(games: [BoxScore], max: Int) -> [GoalieStats] {
+        var returnStats: [GoalieStats] = []
+        for game in games {
+            let sortedGoalies = sortGoaliesBySvPtg(teams: game.playerByGameStats)
+            if (returnStats.isEmpty) {
+                returnStats = sortedGoalies
+            } else {
+                returnStats = mergeSortedArraysSv(list1: sortedGoalies, list2: returnStats)
+            }
+        }
+        var topMax = max
+        if (returnStats.count < max) {
+            topMax = returnStats.count
+        }
+        return Array(returnStats[0..<topMax])
+    }
+    
     func sortGoaliesBySvPtg(teams: BoxScoreTeams) -> [GoalieStats]{
         let sortedAway = teams.awayTeam.goalies.sorted { g1, g2 in
             return calculateSvPtg(g: g1) > calculateSvPtg(g: g2)
@@ -97,6 +131,12 @@ class StatsManager {
     }
     
     func calculateSvPtg(g: GoalieStats) -> Double{
-        return Double(g.saves)/Double(g.goalsAgainst)
+        if (!g.starter) {
+            return 0
+        }
+        if (g.goalsAgainst + g.saves == 0) {
+            return 100.0
+        }
+        return Double(g.saves)/Double(g.goalsAgainst + g.saves)
     }
 }

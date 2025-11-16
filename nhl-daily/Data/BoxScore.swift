@@ -23,15 +23,16 @@ struct TeamStats: Codable {
     let goalies: [GoalieStats]
 }
 
-struct PlayerStats: Codable {
+struct PlayerStats: Codable, Hashable {
     let name: [String : String]
     let goals: Int
     let assists: Int
     let points: Int
     let plusMinus: Int
+    let playerId: Int
 }
 
-struct GoalieStats: Codable {
+struct GoalieStats: Codable, Hashable {
     let name: [String : String]
     let saves: Int
     let starter: Bool
