@@ -10,10 +10,12 @@ import SwiftUI
 struct Landing:View {
     
     @State var curDate: String
+    @State var prevDate: String
     var dateHandler: CurDate = CurDate(dateDisplayed: Date())
     
     init() {
-        self.curDate = dateHandler.returnDateAsString(date: Date())
+        curDate = dateHandler.returnDateAsString(date: Date())
+        prevDate = dateHandler.returnDateAsString(date: Date() - 86400)
     }
     
     var body: some View {
@@ -21,7 +23,8 @@ struct Landing:View {
                 HStack {
                     Spacer()
                     Button {
-                        self.curDate = dateHandler.getPrevDay()
+                        self.curDate = prevDate
+                        self.prevDate = dateHandler.getPrevDay()
                     } label: {
                         Text("<")
                     }
@@ -29,13 +32,14 @@ struct Landing:View {
                     Text(curDate)
                         .foregroundStyle(Color.white)
                     Button {
+                        self.prevDate = curDate
                         self.curDate = dateHandler.getNextDay()
                     } label: {
                         Text(">")
                     }
                     Spacer()
                 }
-                Container(date: $curDate)
+                Container(date: $curDate, prevDate: $prevDate)
                     .padding(5)
                 Spacer()
         }

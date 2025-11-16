@@ -11,6 +11,7 @@ struct Container: View {
     
     @StateObject var api: NHL_api = NHL_api()
     @Binding var date: String
+    @Binding var prevDate: String
     let statsManager: StatsManager = StatsManager()
     @State private var selection = 0
     
@@ -27,6 +28,7 @@ struct Container: View {
                             }
                         }
                     }
+                    Standings(date: date, prevDate: prevDate, schedule: schedule)
                 }
                 // the state object will fire multiple times while it populates boxScore, but it is what it is
                 // too lazy to make it better

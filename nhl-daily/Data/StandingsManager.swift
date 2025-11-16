@@ -14,17 +14,7 @@ enum Phase {
 
 class StandingsManager {
     
-    let curr: Standing
-    let dayBefore: Standing
-    let schedule: Schedule
-    
-    init(curr: Standing, dayBefore: Standing, schedule: Schedule) {
-        self.curr = curr
-        self.dayBefore = dayBefore
-        self.schedule = schedule
-    }
-    
-    func returnChanges() -> [String: [Phase : Int]] {
+    func returnChanges(curr: Standing, dayBefore: Standing, schedule: Schedule) -> [TeamStandingChange] {
         var returnDict : [String: [Phase : Int]] = [:]
         
         for teamStanding in curr.standings {
@@ -60,10 +50,10 @@ class StandingsManager {
             }
 
         }
-        return returnDict
+        return convertToTeamStanding(dict: returnDict, curr: curr)
     }
     
-    func convertToTeamStanding(dict: [String: [Phase: Int]]) -> [TeamStandingChange]{
+    func convertToTeamStanding(dict: [String: [Phase: Int]], curr: Standing) -> [TeamStandingChange]{
         var returnStanding: [TeamStandingChange] = []
         for team in curr.standings {
             let entry = dict[team.teamAbbrev["default"]!]
