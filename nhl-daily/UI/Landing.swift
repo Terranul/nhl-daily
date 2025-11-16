@@ -9,11 +9,14 @@ import SwiftUI
 
 struct Landing:View {
     
-    @State var curDate: String? = nil
+    @State var curDate: String
     var dateHandler: CurDate = CurDate(dateDisplayed: Date())
     
+    init() {
+        self.curDate = dateHandler.returnDateAsString(date: Date())
+    }
+    
     var body: some View {
-        if let curDate = curDate {
             VStack {
                 HStack {
                     Spacer()
@@ -24,6 +27,7 @@ struct Landing:View {
                     }
                     .padding(5)
                     Text(curDate)
+                        .foregroundStyle(Color.white)
                     Button {
                         self.curDate = dateHandler.getNextDay()
                     } label: {
@@ -31,7 +35,9 @@ struct Landing:View {
                     }
                     Spacer()
                 }
-            }
+                Container(date: $curDate)
+                    .padding(5)
+                Spacer()
         }
     }
 }

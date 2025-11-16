@@ -20,14 +20,14 @@ class CurDate {
     func getNextDay() -> String{
         // just a double but typealias is so much cooler
         let interval: TimeInterval = 86400
-        var nextDay = dateDisplayed + interval
+        let nextDay = dateDisplayed + interval
         dateDisplayed = nextDay
         return returnDateAsString(date: nextDay)
     }
     
     func getPrevDay() -> String {
         let interval: TimeInterval = 86400
-        var prevDay = dateDisplayed - interval
+        let prevDay = dateDisplayed - interval
         dateDisplayed = prevDay;
         return returnDateAsString(date: prevDay)
     }
@@ -37,6 +37,7 @@ class CurDate {
     }
     
     func returnDateAsString(date: Date) -> String{
+        dateFormatter.dateFormat = "yyyy-MM-dd"
         return dateFormatter.string(from: date)
     }
     

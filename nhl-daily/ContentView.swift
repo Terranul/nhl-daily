@@ -13,10 +13,7 @@ struct ContentView: View {
     
     var body: some View {
         VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundStyle(.tint)
-            Text("Hello!")
+            Landing()
         }.task {
             do {
                 try api.populateSchedule(url: "https://api-web.nhle.com/v1/score/2025-11-14")
