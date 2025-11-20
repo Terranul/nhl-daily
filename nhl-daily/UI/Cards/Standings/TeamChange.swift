@@ -20,7 +20,7 @@ struct TeamChange: View {
                     .foregroundStyle(.red)
                     .bold()
                     .padding(8)
-            } else if (stats.phase == Phase.ONGO) {
+            } else if (stats.phase == Phase.STATIC) {
                 Text("=")
                     .font(.system(size: 10))
                     .foregroundStyle(.orange)

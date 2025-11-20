@@ -11,7 +11,11 @@ import SwiftUI
 struct nhl_dailyApp: App {
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            NavigationStack {
+                ContentView()
+                    .preferredColorScheme(.dark)
+            }
         }
     }
 }
+

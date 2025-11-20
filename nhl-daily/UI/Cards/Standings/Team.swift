@@ -29,6 +29,11 @@ struct TeamView: View {
     
     var body: some View {
         HStack {
+            Text(team.leagueSequence.formatted() + ".")
+                .font(.system(size: 15))
+                .foregroundStyle(.black)
+                .bold()
+                .padding(8)
             Text(team.teamAbbrev.values.first!)
                 .font(.system(size: 15))
                 .foregroundStyle(.black)
@@ -59,7 +64,6 @@ struct TeamView: View {
                 .foregroundStyle(.black)
                 .bold()
                 .padding(8)
-            TeamChange(stats: teamChg)
         }
         .frame(width: 350, height: 65)
         .background(Color.white)

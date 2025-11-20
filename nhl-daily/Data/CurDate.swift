@@ -41,4 +41,17 @@ class CurDate {
         return dateFormatter.string(from: date)
     }
     
+    func getPrevDayStatic() -> String {
+        let interval: TimeInterval = 86400
+        let prevDay = dateDisplayed - interval
+        return returnDateAsString(date: prevDay)
+    }
+    
+    func getNextDayStatic() -> String {
+        // just a double but typealias is so much cooler
+        let interval: TimeInterval = 86400
+        let nextDay = dateDisplayed + interval
+        return returnDateAsString(date: nextDay)
+    }
+    
 }

@@ -23,8 +23,8 @@ struct Landing:View {
                 HStack {
                     Spacer()
                     Button {
-                        self.curDate = prevDate
-                        self.prevDate = dateHandler.getPrevDay()
+                        self.curDate = dateHandler.getPrevDay()
+                        self.prevDate = dateHandler.getPrevDayStatic()
                     } label: {
                         Text("<")
                     }

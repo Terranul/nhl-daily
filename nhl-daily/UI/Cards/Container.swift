@@ -28,7 +28,7 @@ struct Container: View {
                             }
                         }
                     }
-                    Standings(date: date, prevDate: prevDate, schedule: schedule)
+                    StandPreview(date: date, prevDate: prevDate, schedule: schedule)
                 }
                 // the state object will fire multiple times while it populates boxScore, but it is what it is
                 // too lazy to make it better
