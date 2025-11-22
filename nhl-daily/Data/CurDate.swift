@@ -54,4 +54,20 @@ class CurDate {
         return returnDateAsString(date: nextDay)
     }
     
+    // check if the current user selected date is eqivalent to the present date (only consider the day not hours or minutes)
+    func isCurDate() -> Bool {
+        let presentDay = Date()
+        let leftBound = presentDay - 86400
+        let rightBound = presentDay + 86400
+        return dateDisplayed > leftBound && dateDisplayed < rightBound
+    }
+    
+    // check if the current user selected date is in the future (only consider the day number)
+    func isInFuture() -> Bool {
+        let calendar = Calendar.current
+        let today = calendar.startOfDay(for: Date())
+        let startOfDisplayedDay = calendar.startOfDay(for: dateDisplayed)
+        return startOfDisplayedDay > today
+    }
+    
 }

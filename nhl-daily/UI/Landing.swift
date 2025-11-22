@@ -39,8 +39,13 @@ struct Landing:View {
                     }
                     Spacer()
                 }
-                Container(date: $curDate, prevDate: $prevDate)
-                    .padding(5)
+                if (dateHandler.isInFuture()) {
+                    ContainerFUT(date: $curDate, prevDate: $prevDate)
+                        .padding(5)
+                } else {
+                    Container(date: $curDate, prevDate: $prevDate)
+                        .padding(5)
+                }
                 Spacer()
         }
     }

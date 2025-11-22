@@ -17,7 +17,9 @@ class NHL_api: ObservableObject{
     @Published var curStandings: Standing? = nil
     
     // handle all calls to the api, returning only json values
-    func populateSchedule(url: String) throws {
+    // populateStats details whether you want to call the api to get the stats of a game
+    //  -> only applicable when you have a game in the future
+    func populateSchedule(url: String, populateStats: Bool) throws {
         // reset box score becuase we are on a new day
         // othewise this ends up appending onto the previous or next day
         boxScore = []
@@ -36,7 +38,9 @@ class NHL_api: ObservableObject{
                     self.schedule = try JSONDecoder().decode(Schedule.self, from: data)
                     print(self.schedule!.games.first!.awayTeam.abbrev)
                     // with the game data, now we can populate the stats
-                    try self.populateArrayOfGames()
+                    if (populateStats) {
+                        try self.populateArrayOfGames()
+                    }
                 } catch {
                     print("Decoding error:", error)
                 }
@@ -60,7 +64,7 @@ class NHL_api: ObservableObject{
                     // here we give the data back to the iterator
                     completion(try JSONDecoder().decode(BoxScore.self, from: data))
                 } catch {
-                     print("issue creating schedule")
+                     print("issue creating schedule: gameStats")
                 }
             }
         }.resume()
@@ -85,7 +89,7 @@ class NHL_api: ObservableObject{
                         self.curStandings = try JSONDecoder().decode(Standing.self, from: data)
                     }
                 } catch {
-                     print("issue creating schedule")
+                     print("issue creating schedule: standings")
                 }
             }
         }.resume()

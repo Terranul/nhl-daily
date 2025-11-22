@@ -17,41 +17,62 @@ struct Match:View {
         HStack(alignment: .center) {
             VStack {
                 HStack {
-                    Text(game.awayTeam.abbrev)
-                        .font(.system(size: 40))
-                        .foregroundStyle(.black)
-                        .bold()
-                        .padding(10)
-                    Text(game.awayTeam.score.formatted())
+                    VStack {
+                        Text(game.awayTeam.abbrev)
+                            .font(.system(size: 40))
+                            .foregroundStyle(.black)
+                            .bold()
+                            .padding(5)
+                        Text("SOG: " + game.awayTeam.sog!.formatted())
+                            .font(.system(size: 20))
+                            .foregroundStyle(.gray)
+                    }
+                    .padding(10)
+                    Text(game.awayTeam.score!.formatted())
                         .font(.system(size: 40))
                         .foregroundStyle(.gray)
-                        .bold()
-                }
-                HStack {
-                    Text(game.homeTeam.abbrev)
-                        .font(.system(size: 40))
-                        .foregroundStyle(.black)
                         .bold()
                         .padding(5)
-                    Text(game.homeTeam.score.formatted())
+                }
+                .padding(5)
+                HStack {
+                    VStack {
+                        Text(game.homeTeam.abbrev)
+                            .font(.system(size: 40))
+                            .foregroundStyle(.black)
+                            .bold()
+                            .padding(5)
+                        Text("SOG: " + game.homeTeam.sog!.formatted())
+                            .font(.system(size: 20))
+                            .foregroundStyle(.gray)
+                    }
+                    .padding(10)
+                    Text(game.homeTeam.score!.formatted())
                         .font(.system(size: 40))
                         .foregroundStyle(.gray)
                         .bold()
+                        .padding(5)
                 }
+                .padding(5)
             }
             // here we load the time remaining and the period
-            // note the game may not be finished becuase we are not conisdering seconds... but who cares
-            if (game.clock.timeRemaining == "00:00") {
-                Text("Final Score")
-                    .foregroundStyle(.black)
-                    .font(.system(size: 30))
-                    .padding(10)
-            } else {
-                Text(game.clock.timeRemaining)
-                    .foregroundStyle(.green)
-                    .font(.system(size: 30))
-                    .padding(10)
+            VStack {
+                if (game.gameState == "OFF") {
+                    Text("Final Score")
+                        .foregroundStyle(.black)
+                        .font(.system(size: 30))
+                        .padding(10)
+                } else {
+                    Text("Period " + game.period!.formatted())
+                        .font(.system(size: 30))
+                        .foregroundStyle(.gray)
+                    Text(game.clock!.timeRemaining)
+                        .foregroundStyle(.green)
+                        .font(.system(size: 30))
+                        .padding(10)
+                }
             }
+            .padding(10)
         }
         .background(.white)
         .cornerRadius(10)

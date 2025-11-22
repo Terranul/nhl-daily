@@ -13,6 +13,7 @@ struct Container: View {
     @Binding var date: String
     @Binding var prevDate: String
     let statsManager: StatsManager = StatsManager()
+    let scheduleManager: ScheduleManager = ScheduleManager()
     @State private var selection = 0
     
     var body: some View {
@@ -21,10 +22,16 @@ struct Container: View {
                 if let schedule = api.schedule {
                     ScrollView(.horizontal) {
                         HStack {
-                            ForEach(schedule.games) { curGame in
+                            let games = scheduleManager.sortByTimeRemaining(games: schedule.games)
+                            ForEach(games) { curGame in
                                 // render each game in a horizontal scroll bar
-                                Match(game: curGame)
-                                    .padding(10)
+                                if (curGame.gameState == "FUT") {
+                                    MatchFUT(game: curGame)
+                                        .padding(10)
+                                } else {
+                                    Match(game: curGame)
+                                        .padding(10)
+                                }
                             }
                         }
                     }
@@ -61,7 +68,7 @@ struct Container: View {
             .task(id: date) {
                 do {
                     // luckily the api takes in the same format of our date string
-                    try api.populateSchedule(url: "https://api-web.nhle.com/v1/score/\(date)")
+                    try api.populateSchedule(url: "https://api-web.nhle.com/v1/score/\(date)", populateStats: true)
                 } catch {
                     print("Issue populating the shhedule")
                 }
