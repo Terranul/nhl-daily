@@ -25,7 +25,7 @@ struct Container: View {
                             let games = scheduleManager.sortByTimeRemaining(games: schedule.games)
                             ForEach(games) { curGame in
                                 // render each game in a horizontal scroll bar
-                                if (curGame.gameState == "FUT") {
+                                if (curGame.gameState == "FUT" || curGame.gameState == "PRE") {
                                     MatchFUT(game: curGame)
                                         .padding(10)
                                 } else {

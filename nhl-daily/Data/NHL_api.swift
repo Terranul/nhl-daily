@@ -36,7 +36,7 @@ class NHL_api: ObservableObject{
             DispatchQueue.main.async {
                 do {
                     self.schedule = try JSONDecoder().decode(Schedule.self, from: data)
-                    print(self.schedule!.games.first!.awayTeam.abbrev)
+                    //print(self.schedule!.games.first!.awayTeam.abbrev)
                     // with the game data, now we can populate the stats
                     if (populateStats) {
                         try self.populateArrayOfGames()

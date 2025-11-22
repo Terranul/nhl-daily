@@ -14,11 +14,17 @@ struct ScheduleManager {
     func sortByTimeRemaining(games: [Game]) -> [Game] {
         return games.sorted { game1, game2 in
             if (game1.gameState == "FUT") {
-                return true
-            } else if (game2.gameState == "FUT") {
                 return false
+            } else if (game2.gameState == "FUT") {
+                return true
             }
-            return compareTimes(time1: game1.clock!.timeRemaining, time2: game2.clock!.timeRemaining)
+            if let clock1 = game1.clock {
+                if let clock2 = game2.clock {
+                    return compareTimes(time1: clock1.timeRemaining, time2: clock2.timeRemaining)
+                }
+                return true
+            }
+            return false
         }
     }
 

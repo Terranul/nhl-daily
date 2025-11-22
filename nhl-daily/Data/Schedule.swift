@@ -13,7 +13,7 @@ struct Schedule: Decodable {
 
 struct Game: Decodable, Identifiable {
     let startTimeUTC: String
-    let gameState: String // LIVE -> ongoing, FUT -> upcoming, OFF -> complete
+    let gameState: String // LIVE -> ongoing, FUT -> upcoming, OFF -> complete, PRE -> pregame (same fields are FUT)
     let awayTeam: Team
     let homeTeam: Team
     // *** Only available if the game is ongoing or complete
@@ -25,7 +25,7 @@ struct Game: Decodable, Identifiable {
 
 struct Team: Decodable {
     let abbrev: String
-    // a FUT game will only have:
+    // a FUT or PRE game will only have:
     let record: String?
     let odds: [Odds]? // these will only be populated the day of by my findings
     // a LIVE or OFF game will have:

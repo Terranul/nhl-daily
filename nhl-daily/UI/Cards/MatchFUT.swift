@@ -34,9 +34,9 @@ struct MatchFUT: View {
                     }
                     .padding(10)
                     if let odds = game.homeTeam.odds {
-                        Text(odds[1].value)
-                            .font(.system(size: 40))
-                            .foregroundStyle(.black)
+                        Text(odds[2].value)
+                            .font(.system(size: 30))
+                            .foregroundStyle(.gray)
                             .bold()
                     }
                 }
@@ -56,9 +56,9 @@ struct MatchFUT: View {
                     }
                     .padding(10)
                     if let odds = game.awayTeam.odds {
-                        Text(odds[1].value)
-                            .font(.system(size: 40))
-                            .foregroundStyle(.black)
+                        Text(odds[2].value)
+                            .font(.system(size: 30))
+                            .foregroundStyle(.gray)
                             .bold()
                     }
                 }
